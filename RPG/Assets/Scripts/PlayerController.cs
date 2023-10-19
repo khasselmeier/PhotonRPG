@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviourPun
     public Player photonPlayer;
     public SpriteRenderer sr;
     public Animator weaponAnim;
+    public HeaderInfo headerInfo;
 
     //local player
     public static PlayerController me;
@@ -38,7 +39,10 @@ public class PlayerController : MonoBehaviourPun
         id = player.ActorNumber;
         photonPlayer = player;
 
+        GameManager.instance.players[id - 1] = this;
+
         //initialize the health bar
+        headerInfo.Initialize(player.NickName, maxHp);
 
         if (player.IsLocal)
             me = this;
@@ -60,9 +64,9 @@ public class PlayerController : MonoBehaviourPun
         float mouseX = (Screen.width / 2) - Input.mousePosition.x;
 
         if (mouseX < 0)
-            weaponAnim.transform.parent.localScale = new Vector3(-1, 1, 1);
-        else
             weaponAnim.transform.parent.localScale = new Vector3(1, 1, 1);
+        else
+            weaponAnim.transform.parent.localScale = new Vector3(-1, 1, 1);
     }
 
     void Move()
@@ -97,6 +101,7 @@ public class PlayerController : MonoBehaviourPun
         curHp -= damage;
 
         //update the health bar
+        headerInfo.photonView.RPC("UpdateHealthBar", RpcTarget.All, curHp);
 
         if (curHp <= 0)
             Die();
@@ -134,5 +139,22 @@ public class PlayerController : MonoBehaviourPun
         rig.isKinematic = false;
 
         //update the health bar
+    }
+
+    [PunRPC]
+    void Heal (int amountToHeal)
+    {
+        curHp = Mathf.Clamp(curHp + amountToHeal, 0, maxHp);
+
+        //update the health bar
+        headerInfo.photonView.RPC("UpdateHealthBar", RpcTarget.All, curHp);
+    }
+
+    [PunRPC]
+    void GiveGold (int goldToGive)
+    {
+        gold += goldToGive;
+
+        //update the ui
     }
 }

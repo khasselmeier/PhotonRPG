@@ -41,6 +41,9 @@ MonoBehaviour:
   - ImInGame
   - TakeDamage
   - Initialize
+  - GiveGold
+  - Heal
+  - UpdateHealthBar
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
