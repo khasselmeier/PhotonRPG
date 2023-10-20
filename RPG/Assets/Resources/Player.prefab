@@ -54,8 +54,8 @@ MonoBehaviour:
   id: 0
   moveSpeed: 3
   gold: 0
-  curHp: 100
-  maxHp: 100
+  curHp: 50
+  maxHp: 50
   dead: 0
   damage: 10
   attackRange: 1
@@ -150,8 +150,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8, y: 0.8}
+  m_Offset: {x: -0.006626606, y: -0.11486173}
+  m_Size: {x: 0.83092403, y: 0.87068415}
   m_Direction: 0
 --- !u!114 &7203949590538131499
 MonoBehaviour:
